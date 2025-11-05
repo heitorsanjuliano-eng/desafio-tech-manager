@@ -1,0 +1,11 @@
+{
+  "name": "teddy-tech-manager",
+  "version": "0.2.1",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "start": "echo Use docker compose"
+  }
+}
