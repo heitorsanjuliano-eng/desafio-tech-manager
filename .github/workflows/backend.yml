@@ -1,16 +1,52 @@
 
-name: Backend CI
-on: [push, pull_request]
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: teddy
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: |
-          cd apps/backend
-          npm ci || npm install
-          npm run build || true
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/backend
+
+      - name: Run backend tests
+        run: npm run test
+        working-directory: apps/backend
+
+      - name: Build backend
+        run: npm run build
+        working-directory: apps/backend
+
+      - name: Build Docker image
+        run: |
+          docker build -t backend:latest apps/backend
