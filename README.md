@@ -1,133 +1,183 @@
 
-Teddy Tech Manager – Desafio Técnico
-Visão Geral
 
-O Teddy Tech Manager é um MVP full-stack desenvolvido como parte do desafio técnico da Teddy Open Finance.
-Ele consiste em um sistema de gerenciamento de clientes com:
+# Desafio Técnico – Tech Manager | Teddy Open Finance
 
-Autenticação via e-mail/senha com JWT
+## Visão Geral
 
-CRUD de clientes com soft delete
+Este projeto é um MVP full-stack de um sistema de clientes com autenticação, CRUD, dashboard/admin básico, pronto para rodar localmente via Docker. O repositório está organizado como **monorepo Nx.dev**, contendo frontend e backend separados.
 
-Dashboard/Admin com totais, últimos clientes e gráficos
+O objetivo é demonstrar:
+- Arquitetura modular e escalável.
+- Boas práticas de DevOps e observabilidade.
+- Funcionalidades essenciais de gestão de clientes.
 
-Contador de acessos em detalhes de cliente
+---
 
-Auditoria com timestamps
+## Estrutura do Repositório
 
-Observabilidade mínima via logs estruturados e healthcheck
+desafio-tech-manager/
+├── apps/
+│ ├── frontend/
+│ │ ├── Dockerfile
+│ │ ├── .env
+│ │ ├── README.md
+│ │ └── src/
+│ │ └── ... (código React + Vite + TS)
+│ └── backend/
+│ ├── Dockerfile
+│ ├── .env
+│ ├── README.md
+│ └── src/
+│ └── ... (código NestJS + TypeORM)
+├── docs/
+│ └── architecture.png
+├── docker-compose.yml
+├── package.json
+├── package-lock.json
+└── README.md
 
-O projeto é estruturado como monorepo Nx.dev, contendo dois apps principais:
 
-Backend: NestJS + TypeORM + PostgreSQL
+---
 
-Frontend: React + Vite + TypeScript
+## Tecnologias
 
-Estrutura do Repositório
+**Frontend:**
+- React + Vite + TypeScript
+- Roteamento, formulários com validação e UI responsiva
+- Testes unitários (diferencial: E2E)
+- Docker + docker-compose
 
-<img width="183" height="321" alt="image" src="https://github.com/user-attachments/assets/f650ae83-8f33-450c-a6e5-52238ce62f92" />
+**Backend:**
+- NestJS modular
+- TypeORM + PostgreSQL
+- JWT para autenticação
+- Swagger em `/docs`
+- Logs estruturados (JSON)
+- Healthcheck em `/healthz`
+- Docker + docker-compose
+- Validação com class-validator/Zod
 
-Cada app possui docker-compose.yml, .env e README.md próprios, permitindo execução isolada.
+**Monorepo Nx:**
+- Apps organizados com Nx
+- Pipelines separados para build e testes
+- CI/CD via GitHub Actions
 
-Arquitetura
+---
 
-Substitua diagrama.png pela imagem do seu diagrama de arquitetura.
+## Escopo Funcional (MVP)
 
-Visão local:
+**Autenticação:**
+- Login com e-mail/senha usando JWT
 
-Frontend: http://localhost:5173
+**CRUD de Clientes:**
+- Criar, listar, editar, excluir (soft delete)
+- Detalhes do cliente com contador de acessos
+- Auditoria com timestamps
 
-Backend API: http://localhost:3000
+**Dashboard/Admin:**
+- Totais
+- Últimos clientes cadastrados
+- Gráfico de clientes
 
-PostgreSQL: localhost:5432
+---
 
-Redis (opcional): localhost:6379
+## Endpoints Backend
 
-Arquitetura proposta para cloud (AWS):
+| Método | Endpoint            | Descrição                       |
+|--------|------------------|---------------------------------|
+| POST   | /auth/login       | Autenticação                    |
+| POST   | /clients          | Criação de cliente (auth)       |
+| GET    | /clients          | Listagem de clientes (auth)     |
+| GET    | /clients/:id      | Detalhe + contador (auth)       |
+| PUT    | /clients/:id      | Atualização (auth)              |
+| DELETE | /clients/:id      | Soft delete (auth)              |
+| GET    | /healthz          | Healthcheck                     |
+| GET    | /docs             | Swagger UI                      |
 
-Backend e Frontend em containers Docker
+---
 
-Banco de dados gerenciado (RDS)
+## Instruções para rodar localmente
 
-Load balancer + escalabilidade automática
-
-Observabilidade via logs estruturados e métricas Prometheus
-
-Instalação e Execução Local
-
-Clone o repositório:
-
+1. Clone o repositório:
+```bash
 git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
 cd desafio-tech-manager
 
-
-Configure variáveis de ambiente em apps/backend/.env e apps/frontend/.env (exemplo já incluso).
-
-Execute os containers:
+2. Suba os containers com Docker Compose:
 
 docker compose up --build
 
-
-Acesse:
+3. Acesse a aplicação:
 
 Frontend: http://localhost:5173
 
-Swagger Backend: http://localhost:3000/docs
+Backend: http://localhost:3000
 
-Endpoints Principais (Backend)
-Método	Rota	Descrição
-POST	/auth/login	Autenticação via JWT
-POST	/clients	Criar cliente (auth)
-GET	/clients	Listar clientes (auth)
-GET	/clients/:id	Detalhe + contador (auth)
-PUT	/clients/:id	Atualizar cliente (auth)
-DELETE	/clients/:id	Soft delete (auth)
-GET	/healthz	Healthcheck da API
-GET	/metrics	Métricas para Prometheus
-Fluxos (Frontend)
+Swagger: http://localhost:3000/docs
 
-Login → redireciona para Dashboard
+Usuário seedado automaticamente:
 
-Dashboard → exibe cards de totais, gráficos e últimos clientes
+Email: admin@teddy.com
+Senha: password
 
-Clientes → Listar, Criar, Editar, Excluir (soft delete), Detalhes com contador
+## Observabilidade
 
-Observabilidade
+Logs estruturados em JSON
 
-Logs estruturados JSON no backend
+Endpoints /healthz e /metrics (Prometheus exposition format)
 
-Healthcheck: /healthz
+Possibilidade de integração futura com traces (OpenTelemetry/X-Ray)
 
-Métricas Prometheus: /metrics
+Documentação no README explicando a importância das práticas
 
-Possível integração futura: traces com OpenTelemetry
 
-Testes & Qualidade
+## Diagrama da Arquitetura
 
-Testes unitários obrigatórios (frontend e backend)
+![Diagrama da Arquitetura](./docs/architecture.png)
 
-Testes E2E (diferencial)
+graph TD
+    Browser[Browser / User Interface\nReact + Vite + TS] -->|HTTP (JWT)| Frontend[Frontend App\nLogin / Dashboard / Clients Pages]
+    Frontend -->|REST API (JSON)| Backend[NestJS Backend\nModules: Auth, Clients, Health\nJWT Auth, Soft Delete, Auditoria]
+    Backend -->|TypeORM Queries| Postgres[(Postgres Database)\nTables: Users, Clients\nSoft Delete + Timestamps]]
+    Backend -->|Logs estruturados (JSON)| Logs[Logs & Metrics]
+    Backend -->|Endpoint /healthz| HealthCheck[Healthcheck]
+    Backend -->|Endpoint /metrics| Prometheus[Prometheus Metrics]
+    subgraph "CI/CD Pipeline (GitHub Actions)"
+        FE_Workflow[Frontend Workflow\nBuild / Test / Deploy Docker]
+        BE_Workflow[Backend Workflow\nBuild / Test / Deploy Docker]
+        FE_Workflow --> Frontend
+        BE_Workflow --> Backend
+    end
+    subgraph "Local Dev Environment (Docker Compose)"
+        FE_Container[Frontend Container (nginx:alpine)]
+        BE_Container[Backend Container (Node/NestJS)]
+        DB_Container[Postgres Container]
+        FE_Container --> Frontend
+        BE_Container --> Backend
+        DB_Container --> Postgres
+    end
+    subgraph "Cloud Deployment (AWS)"
+        ALB[Application Load Balancer]
+        EC2_Frontend[EC2 / Fargate Frontend]
+        EC2_Backend[EC2 / Fargate Backend]
+        RDS[Amazon RDS (Postgres)]
+        ALB --> EC2_Frontend
+        ALB --> EC2_Backend
+        EC2_Backend --> RDS
+    end
 
-ESLint + Prettier configurados
 
-Commits semânticos
+## Escalabilidade
 
-CI/CD via GitHub Actions (pipelines separados para frontend e backend)
+Frontend e backend containerizados para deploy em cloud
 
-Escalabilidade e Cloud
+Arquitetura modular e separação de responsabilidades
 
-Backend e frontend containerizados → fácil deploy em cloud
+Pipelines CI/CD independentes para frontend e backend
 
-Banco de dados gerenciado (Postgres)
+Banco PostgreSQL isolado via container, pronto para replicação
 
-Redis opcional para caching e contadores
 
-Possível integração com AWS ECS/Fargate ou EKS para escalabilidade automática
+##### 
 
-Observações
-
-Usuário seed do sistema: admin@teddy.com / password
-
-Arquitetura modular e desacoplada para facilitar manutenção e expansão
-
-Documentação Swagger disponível em /docs
+Desafio concluído por: Heitor San Juliano
