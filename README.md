@@ -82,24 +82,30 @@ O repositório segue a estrutura de um **monorepo Nx**, permitindo gestão unifi
 - Node.js >= 18  
 - Docker e Docker Compose  
 - Nx CLI global (opcional):  
-  ```bash
-  npm install -g nx
-  ```
+ ```
+ npm install -g nx
+ ```
 
 ---
 
 ### 🔸 Execução via Docker (recomendado)
 
-```bash
+```
 # Subir todo o ambiente
 docker-compose up --build
 ```
 
 Serviços disponíveis:
 - **Frontend:** http://localhost:5173  
-- **Backend:** http://localhost:3000  
+- **Backend:** http://localhost:3000
+- **Swagger:** http://localhost:3000/docs
 - **PostgreSQL:** localhost:5432  
-- **Swagger: http://localhost:3000/docs
+
+Ver Logs e Monitoramento:
+
+```
+docker-compose logs -f
+```
 
 Acesse a aplicação:
 
@@ -109,24 +115,26 @@ Acesse a aplicação:
 ## Instruções para rodar localmente
 
 1. Clone o repositório:
-bash
+```
 git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
 cd desafio-tech-manager
+```
 
 ---
 
 ### 🔸 Execução manual (sem Docker)
 
 #### Backend
-``bash
+```
 cd apps/backend
 npm install
 npm run start:dev
-
+```
 ---
 
 ## Estrutura do Repositório
 
+```
 desafio-tech-manager/
 ├── apps/
 │ ├── frontend/
@@ -147,7 +155,7 @@ desafio-tech-manager/
 ├── package.json
 ├── package-lock.json
 └── README.md
-
+```
 
 ---
 
@@ -193,30 +201,6 @@ desafio-tech-manager/
 
 ---
 
-## Endpoints Backend
-
-| Método | Endpoint            | Descrição                       |
-|--------|------------------|---------------------------------|
-| POST   | /auth/login       | Autenticação                    |
-| POST   | /clients          | Criação de cliente (auth)       |
-| GET    | /clients          | Listagem de clientes (auth)     |
-| GET    | /clients/:id      | Detalhe + contador (auth)       |
-| PUT    | /clients/:id      | Atualização (auth)              |
-| DELETE | /clients/:id      | Soft delete (auth)              |
-| GET    | /healthz          | Healthcheck                     |
-| GET    | /docs             | Swagger UI                      |
-
----
-
-## Instruções para rodar localmente
-
-1. Clone o repositório:
-bash
-git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
-cd desafio-tech-manager
-
-2. Suba os containers com Docker Compose:
->>>>>>> 57442f7 (chore: add Jest configuration, test coverage setup and corporate README)
 
 #### Frontend
 ```bash
@@ -224,7 +208,6 @@ cd apps/frontend
 npm install
 npm run dev
 ```
-
 ---
 
 ## 🧪 Testes e Cobertura
@@ -336,6 +319,7 @@ O pipeline CI/CD foi configurado via **GitHub Actions**, incluindo:
 
 ![Diagrama da Arquitetura](./docs/architecture.png)
 
+```
 graph TD
     Browser[Browser / User Interface\nReact + Vite + TS] -->|HTTP (JWT)| Frontend[Frontend App\nLogin / Dashboard / Clients Pages]
     Frontend -->|REST API (JSON)| Backend[NestJS Backend\nModules: Auth, Clients, Health\nJWT Auth, Soft Delete, Auditoria]
@@ -366,7 +350,7 @@ graph TD
         ALB --> EC2_Backend
         EC2_Backend --> RDS
     end
-
+```
 --
 
 ## Observabilidade
