@@ -1,7 +1,7 @@
+
 # 🧩 Desafio Técnico – Tech Manager - Teddy Open Finance  
 **Monorepo Nx | Backend NestJS + Frontend React (Vite) | CI/CD | Docker**
 
-<<<<<<< HEAD
 ---
 
 ## 📘 Visão Geral
@@ -223,7 +223,7 @@ desafio-tech-manager/
 ## Instruções para rodar localmente
 
 1. Clone o repositório:
-```bash
+bash
 git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
 cd desafio-tech-manager
 
@@ -265,13 +265,13 @@ npm run test:coverage
 
 📊 Exemplo de saída de cobertura:
 
-```
+
 ----------|---------|----------|---------|---------
 All files |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------
-```
 
 --
+
 ## Testes & Qualidade
 
 Este projeto segue práticas de qualidade e padronização de código alinhadas às exigências do desafio técnico.
@@ -284,16 +284,11 @@ Frontend: configurado com Jest + React Testing Library, garantindo renderizaçã
 
 Cobertura de código validada automaticamente nos pipelines do GitHub Actions.
 
-<<<<<<< HEAD
 
 ## Ferramentas e Padrões
-=======
-3. Acesse a aplicação:
->>>>>>> 57442f7 (chore: add Jest configuration, test coverage setup and corporate README)
 
 ESLint + Prettier: garantem padronização de estilo e qualidade de código.
 
-<<<<<<< HEAD
 Commits semânticos: estrutura de mensagens seguindo o padrão Conventional Commits.
 
 CI/CD: Workflows separados para Frontend e Backend utilizando Nx + GitHub Actions, com execução automática de testes e build.
@@ -421,75 +416,3 @@ Engineering & Technology PMO Manager| Head of Engineering
 ## 🧾 Licença
 
 Este projeto é de uso restrito para avaliação técnica e **não possui licença pública de redistribuição**.
-=======
-Backend: http://localhost:3000
-
-Swagger: http://localhost:3000/docs
-
-Usuário seedado automaticamente:
-
-Email: admin@teddy.com
-Senha: password
-
-## Observabilidade
-
-Logs estruturados em JSON
-
-Endpoints /healthz e /metrics (Prometheus exposition format)
-
-Possibilidade de integração futura com traces (OpenTelemetry/X-Ray)
-
-Documentação no README explicando a importância das práticas
-
-
-## Diagrama da Arquitetura
-
-![Diagrama da Arquitetura](./docs/architecture.png)
-
-graph TD
-    Browser[Browser / User Interface\nReact + Vite + TS] -->|HTTP (JWT)| Frontend[Frontend App\nLogin / Dashboard / Clients Pages]
-    Frontend -->|REST API (JSON)| Backend[NestJS Backend\nModules: Auth, Clients, Health\nJWT Auth, Soft Delete, Auditoria]
-    Backend -->|TypeORM Queries| Postgres[(Postgres Database)\nTables: Users, Clients\nSoft Delete + Timestamps]]
-    Backend -->|Logs estruturados (JSON)| Logs[Logs & Metrics]
-    Backend -->|Endpoint /healthz| HealthCheck[Healthcheck]
-    Backend -->|Endpoint /metrics| Prometheus[Prometheus Metrics]
-    subgraph "CI/CD Pipeline (GitHub Actions)"
-        FE_Workflow[Frontend Workflow\nBuild / Test / Deploy Docker]
-        BE_Workflow[Backend Workflow\nBuild / Test / Deploy Docker]
-        FE_Workflow --> Frontend
-        BE_Workflow --> Backend
-    end
-    subgraph "Local Dev Environment (Docker Compose)"
-        FE_Container[Frontend Container (nginx:alpine)]
-        BE_Container[Backend Container (Node/NestJS)]
-        DB_Container[Postgres Container]
-        FE_Container --> Frontend
-        BE_Container --> Backend
-        DB_Container --> Postgres
-    end
-    subgraph "Cloud Deployment (AWS)"
-        ALB[Application Load Balancer]
-        EC2_Frontend[EC2 / Fargate Frontend]
-        EC2_Backend[EC2 / Fargate Backend]
-        RDS[Amazon RDS (Postgres)]
-        ALB --> EC2_Frontend
-        ALB --> EC2_Backend
-        EC2_Backend --> RDS
-    end
-
-
-## Escalabilidade
-
-Frontend e backend containerizados para deploy em cloud
-
-Arquitetura modular e separação de responsabilidades
-
-Pipelines CI/CD independentes para frontend e backend
-
-Banco PostgreSQL isolado via container, pronto para replicação
-
-
-##### 
-
-Desafio concluído por: Heitor San Juliano
->>>>>>> 57442f7 (chore: add Jest configuration, test coverage setup and corporate README)
