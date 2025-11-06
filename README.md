@@ -99,12 +99,12 @@ Serviços disponíveis:
 - **Frontend:** http://localhost:5173  
 - **Backend:** http://localhost:3000  
 - **PostgreSQL:** localhost:5432  
---**Swagger: http://localhost:3000/docs
+- **Swagger: http://localhost:3000/docs
 
 Acesse a aplicação:
 
---** Email: admin@teddy.com
---** Senha: password
+- ** Email: admin@teddy.com
+- ** Senha: password
 
 ## Instruções para rodar localmente
 
