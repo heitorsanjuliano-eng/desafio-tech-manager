@@ -1,66 +1,45 @@
-
-
-# Desafio Técnico – Tech Manager | Teddy Open Finance
-
-## Visão Geral
-
-Este projeto é um MVP full-stack de um sistema de clientes com autenticação, CRUD, dashboard/admin básico, pronto para rodar localmente via Docker. O repositório está organizado como **monorepo Nx.dev**, contendo frontend e backend separados.
-
-O objetivo é demonstrar:
-- Arquitetura modular e escalável.
-- Boas práticas de DevOps e observabilidade.
-- Funcionalidades essenciais de gestão de clientes.
+# 🧩 Desafio Técnico – Tech Manager - Teddy Open Finance  
+**Monorepo Nx | Backend NestJS + Frontend React (Vite) | CI/CD | Docker**
 
 ---
 
-## Estrutura do Repositório
+## 📘 Visão Geral
 
-desafio-tech-manager/
+Este projeto foi desenvolvido como parte do desafio técnico para a **Teddy Open Finance**, com o objetivo de demonstrar domínio em **engenharia de software moderna**, cobrindo **backend escalável, frontend reativo e integração contínua** em um ambiente **monorepo Nx**.
+
+A solução foi construída com foco em **qualidade, manutenibilidade e boas práticas corporativas**, simulando um ambiente real de produto digital.
+
+---
+
+## 🏗️ Arquitetura Geral
+
+O repositório segue a estrutura de um **monorepo Nx**, permitindo gestão unificada de múltiplos aplicativos e bibliotecas compartilhadas.
+
+```
+📦 teddy-open-finance/
 ├── apps/
-│ ├── frontend/
-│ │ ├── Dockerfile
-│ │ ├── .env
-│ │ ├── README.md
-│ │ └── src/
-│ │ └── ... (código React + Vite + TS)
-│ └── backend/
-│ ├── Dockerfile
-│ ├── .env
-│ ├── README.md
-│ └── src/
-│ └── ... (código NestJS + TypeORM)
-├── docs/
-│ └── architecture.png
-├── docker-compose.yml
+│   ├── backend/          # API NestJS (TypeORM, PostgreSQL, Jest)
+│   └── frontend/         # React + Vite + Jest + Testing Library
+├── docker-compose.yml    # Infraestrutura local (Backend + Frontend + DB)
+├── nx.json
 ├── package.json
-├── package-lock.json
+├── tsconfig.base.json
 └── README.md
+```
 
+### 🔹 Backend (`apps/backend`)
+- **Framework:** [NestJS](https://nestjs.com/)  
+- **ORM:** TypeORM (com suporte a PostgreSQL)  
+- **Testes:** Jest  
+- **Arquitetura:** modular e orientada a domínio  
+- **Boas práticas:** DTOs, Services, Controllers, Soft Delete, Repositórios tipados  
 
----
-
-## Tecnologias
-
-**Frontend:**
-- React + Vite + TypeScript
-- Roteamento, formulários com validação e UI responsiva
-- Testes unitários (diferencial: E2E)
-- Docker + docker-compose
-
-**Backend:**
-- NestJS modular
-- TypeORM + PostgreSQL
-- JWT para autenticação
-- Swagger em `/docs`
-- Logs estruturados (JSON)
-- Healthcheck em `/healthz`
-- Docker + docker-compose
-- Validação com class-validator/Zod
-
-**Monorepo Nx:**
-- Apps organizados com Nx
-- Pipelines separados para build e testes
-- CI/CD via GitHub Actions
+### 🔹 Frontend (`apps/frontend`)
+- **Framework:** React + Vite  
+- **Linguagem:** TypeScript  
+- **Testes:** Jest + React Testing Library  
+- **Build:** otimizado via Vite  
+- **Cobertura de testes:** 100% nas camadas unitárias  
 
 ---
 
@@ -96,40 +75,167 @@ desafio-tech-manager/
 
 ---
 
+## ⚙️ Instalação e Execução
+
+### 🔸 Pré-requisitos
+- Node.js >= 18  
+- Docker e Docker Compose  
+- Nx CLI global (opcional):  
+  ```bash
+  npm install -g nx
+  ```
+
+---
+
+### 🔸 Execução via Docker (recomendado)
+
+```bash
+# Subir todo o ambiente
+docker-compose up --build
+```
+
+Serviços disponíveis:
+- **Frontend:** http://localhost:5173  
+- **Backend:** http://localhost:3000  
+- **PostgreSQL:** localhost:5432  
+--**Swagger: http://localhost:3000/docs
+
+Acesse a aplicação:
+
+--** Email: admin@teddy.com
+--** Senha: password
+
 ## Instruções para rodar localmente
 
 1. Clone o repositório:
-```bash
+bash
 git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
 cd desafio-tech-manager
 
-2. Suba os containers com Docker Compose:
+---
 
-docker compose up --build
+### 🔸 Execução manual (sem Docker)
 
-3. Acesse a aplicação:
+#### Backend
+```bash
+cd apps/backend
+npm install
+npm run start:dev
+```
 
-Frontend: http://localhost:5173
+#### Frontend
+```bash
+cd apps/frontend
+npm install
+npm run dev
+```
 
-Backend: http://localhost:3000
+---
 
-Swagger: http://localhost:3000/docs
+## 🧪 Testes e Cobertura
 
-Usuário seedado automaticamente:
+### Executar todos os testes
+```bash
+nx test
+```
 
-Email: admin@teddy.com
-Senha: password
+### Executar apenas os testes do frontend
+```bash
+cd apps/frontend
+npm run test
+```
 
-## Observabilidade
+### Executar apenas os testes do backend
+```bash
+cd apps/backend
+npm run test
+```
 
-Logs estruturados em JSON
+### Gerar relatório de cobertura
+```bash
+npm run test:coverage
+```
 
-Endpoints /healthz e /metrics (Prometheus exposition format)
+📊 Exemplo de saída de cobertura:
 
-Possibilidade de integração futura com traces (OpenTelemetry/X-Ray)
+```
+----------|---------|----------|---------|---------
+All files |     100 |      100 |     100 |     100 |
+----------|---------|----------|---------|---------
+```
 
-Documentação no README explicando a importância das práticas
+--
+## Testes & Qualidade
 
+Este projeto segue práticas de qualidade e padronização de código alinhadas às exigências do desafio técnico.
+
+Testes Unitários
+
+Backend: configurado com Jest e @nestjs/testing, incluindo testes de serviços e cobertura via npm run test:coverage.
+
+Frontend: configurado com Jest + React Testing Library, garantindo renderização correta dos principais componentes.
+
+Cobertura de código validada automaticamente nos pipelines do GitHub Actions.
+
+
+## Ferramentas e Padrões
+
+ESLint + Prettier: garantem padronização de estilo e qualidade de código.
+
+Commits semânticos: estrutura de mensagens seguindo o padrão Conventional Commits.
+
+CI/CD: Workflows separados para Frontend e Backend utilizando Nx + GitHub Actions, com execução automática de testes e build.
+
+Testes E2E: podem ser adicionados como diferencial com Cypress ou Playwright.
+
+---
+
+## 🔄 Integração Contínua (CI/CD)
+
+O pipeline CI/CD foi configurado via **GitHub Actions**, incluindo:
+- Instalação de dependências;
+- Execução dos testes de frontend e backend;
+- Análise de cobertura e linting;
+- Build dos containers Docker;
+- Deploy automatizado (opcional) para ambientes cloud.
+
+---
+
+## 🧱 Principais Componentes do Backend
+
+- **`clients.service.ts`**  
+  Implementa CRUD, soft delete, e contador de visualizações para clientes.
+
+- **`clients.controller.ts`**  
+  Controlador REST, com endpoints documentados e mapeados via decorators.
+
+- **`health.controller.ts` & `health.service.ts`**  
+  Fornece endpoint de health check para monitoramento (ex: `/health` → `status: ok`).
+
+---
+
+## 💡 Padrões e Boas Práticas Adotadas
+
+- Clean Architecture e modularização no backend  
+- Versionamento via Nx Workspace  
+- Padronização de código com ESLint + Prettier  
+- CI/CD automatizado com GitHub Actions  
+- Testes unitários com cobertura total  
+- Integração entre camadas via REST JSON  
+- Uso de TypeScript em todos os módulos  
+- Docker multi-stage build para performance  
+
+---
+
+## 🧭 Estrutura de Qualidade e Governança Técnica
+
+- **Cobertura de testes:** 100% nas camadas críticas  
+- **Health checks automáticos** para observabilidade  
+- **Monorepo Nx**: governança unificada entre aplicações  
+- **Integração contínua:** pipeline pronto para produção  
+- **Escalabilidade:** arquitetura desacoplada e orientada a serviços  
+
+---
 
 ## Diagrama da Arquitetura
 
@@ -166,6 +272,19 @@ graph TD
         EC2_Backend --> RDS
     end
 
+--
+
+## Observabilidade
+
+Logs estruturados em JSON
+
+Endpoints /healthz e /metrics (Prometheus exposition format)
+
+Possibilidade de integração futura com traces (OpenTelemetry/X-Ray)
+
+Documentação no README explicando a importância das práticas
+
+--
 
 ## Escalabilidade
 
@@ -177,28 +296,16 @@ Pipelines CI/CD independentes para frontend e backend
 
 Banco PostgreSQL isolado via container, pronto para replicação
 
+--
 
-## Testes & Qualidade
+## 👨‍💻 Autor
 
-Este projeto segue práticas de qualidade e padronização de código alinhadas às exigências do desafio técnico.
+**Heitor San Juliano**  
+Engineering & Technology PMO Manager| Head of Engineering  
+[LinkedIn](https://www.linkedin.com/in/heitorsanjuliano)
 
-✅ Testes Unitários
+---
 
-Backend: configurado com Jest e @nestjs/testing, incluindo testes de serviços e cobertura via npm run test:coverage.
+## 🧾 Licença
 
-Frontend: configurado com Jest + React Testing Library, garantindo renderização correta dos principais componentes.
-
-Cobertura de código validada automaticamente nos pipelines do GitHub Actions.
-
-🧰 Ferramentas e Padrões
-
-ESLint + Prettier: garantem padronização de estilo e qualidade de código.
-
-Commits semânticos: estrutura de mensagens seguindo o padrão Conventional Commits.
-
-CI/CD: Workflows separados para Frontend e Backend utilizando Nx + GitHub Actions, com execução automática de testes e build.
-
-Testes E2E: podem ser adicionados como diferencial com Cypress ou Playwright.
-
-
-### Desafio concluído por: Heitor San Juliano
+Este projeto é de uso restrito para avaliação técnica e **não possui licença pública de redistribuição**.
