@@ -118,22 +118,10 @@ cd desafio-tech-manager
 ### 🔸 Execução manual (sem Docker)
 
 #### Backend
-```bash
+``bash
 cd apps/backend
 npm install
 npm run start:dev
-```
-=======
-# Desafio Técnico – Tech Manager | Teddy Open Finance
-
-## Visão Geral
-
-Este projeto é um MVP full-stack de um sistema de clientes com autenticação, CRUD, dashboard/admin básico, pronto para rodar localmente via Docker. O repositório está organizado como **monorepo Nx.dev**, contendo frontend e backend separados.
-
-O objetivo é demonstrar:
-- Arquitetura modular e escalável.
-- Boas práticas de DevOps e observabilidade.
-- Funcionalidades essenciais de gestão de clientes.
 
 ---
 
