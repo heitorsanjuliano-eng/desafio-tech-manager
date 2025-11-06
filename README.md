@@ -178,8 +178,27 @@ Pipelines CI/CD independentes para frontend e backend
 Banco PostgreSQL isolado via container, pronto para replicação
 
 
-## Teste e Qualidade
+## Testes & Qualidade
 
-O projeto inclui testes unitários configurados e executáveis tanto no backend (NestJS + Jest) quanto no frontend (React + Jest + Testing Library), com cobertura verificada via CI/CD.
+Este projeto segue práticas de qualidade e padronização de código alinhadas às exigências do desafio técnico.
+
+✅ Testes Unitários
+
+Backend: configurado com Jest e @nestjs/testing, incluindo testes de serviços e cobertura via npm run test:coverage.
+
+Frontend: configurado com Jest + React Testing Library, garantindo renderização correta dos principais componentes.
+
+Cobertura de código validada automaticamente nos pipelines do GitHub Actions.
+
+🧰 Ferramentas e Padrões
+
+ESLint + Prettier: garantem padronização de estilo e qualidade de código.
+
+Commits semânticos: estrutura de mensagens seguindo o padrão Conventional Commits.
+
+CI/CD: Workflows separados para Frontend e Backend utilizando Nx + GitHub Actions, com execução automática de testes e build.
+
+Testes E2E: podem ser adicionados como diferencial com Cypress ou Playwright.
+
 
 ### Desafio concluído por: Heitor San Juliano
