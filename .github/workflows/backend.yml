@@ -8,55 +8,34 @@ on:
     branches: [ main ]
 
 jobs:
-  backend-ci:
+  build-and-test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: teddy
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install backend dependencies
+        run: npm ci --include=dev
         working-directory: apps/backend
 
-      - name: Lint check
+      - name: Lint backend code
         run: npm run lint
         working-directory: apps/backend
 
-      - name: Run unit tests with coverage
+      - name: Run backend tests
         run: npm run test:coverage
         working-directory: apps/backend
-
-      - name: Upload coverage report (artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-coverage-report
-          path: apps/backend/coverage/
 
       - name: Build backend
         run: npm run build
         working-directory: apps/backend
 
       - name: Build Docker image
-        run: docker build -t teddy-backend:latest apps/backend
+        run: |
+          docker build -t backend:latest apps/backend

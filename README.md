@@ -2,6 +2,9 @@
 # 🧩 Desafio Técnico – Tech Manager - Teddy Open Finance  
 **Monorepo Nx | Backend NestJS + Frontend React (Vite) | CI/CD | Docker**
 
+[![Backend CI/CD](https://github.com/heitorsanjuliano-eng/desafio-tech-manager/actions/workflows/backend.yml/badge.svg)](https://github.com/heitorsanjuliano-eng/desafio-tech-manager/actions/workflows/backend.yml)
+[![Frontend CI/CD](https://github.com/heitorsanjuliano-eng/desafio-tech-manager/actions/workflows/frontend.yml/badge.svg)](https://github.com/heitorsanjuliano-eng/desafio-tech-manager/actions/workflows/frontend.yml)
+
 ---
 
 ## 📘 Visão Geral
@@ -127,16 +130,18 @@ cd desafio-tech-manager
 #### Backend
 ```
 cd apps/backend
-npm install
+npm ci
 npm run start:dev
+
 ```
 ---
 
 #### Frontend
 ```
 cd apps/frontend
-npm install
+npm ci
 npm run dev
+
 ```
 ---
 
@@ -270,12 +275,25 @@ Testes E2E: podem ser adicionados como diferencial com Cypress ou Playwright.
 
 ## 🔄 Integração Contínua (CI/CD)
 
-O pipeline CI/CD foi configurado via **GitHub Actions**, incluindo:
-- Instalação de dependências;
-- Execução dos testes de frontend e backend;
-- Análise de cobertura e linting;
-- Build dos containers Docker;
-- Deploy automatizado (opcional) para ambientes cloud.
+O ambiente foi projetado para ser totalmente reproduzível via **Docker Compose**, refletindo um fluxo corporativo de desenvolvimento com pipelines CI/CD equivalentes aos workflows do GitHub Actions.
+
+O projeto possui pipelines automatizados via **GitHub Actions**, com workflows independentes para **frontend** e **backend**.
+
+### Frontend CI/CD (`.github/workflows/frontend.yml`)
+- Instala dependências e devDependencies
+- Executa testes unitários com Jest + React Testing Library
+- Realiza build otimizado do Vite
+- Gera imagem Docker para publicação
+
+### Backend CI/CD (`.github/workflows/backend.yml`)
+- Instala dependências e devDependencies
+- Executa linting automatizado (ESLint)
+- Executa testes unitários e coverage via Jest
+- Realiza build TypeScript e empacotamento da aplicação NestJS
+- Gera imagem Docker pronta para deploy
+
+Ambos os pipelines são configurados para execução em `push` ou `pull_request` na branch `main`, validando a integridade do código e garantindo qualidade contínua.
+
 
 ---
 
