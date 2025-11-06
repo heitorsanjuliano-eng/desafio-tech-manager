@@ -116,7 +116,7 @@ Acesse a aplicação:
 
 1. Clone o repositório:
 ```
-git clone https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
+git clone: https://github.com/heitorsanjuliano-eng/desafio-tech-manager.git
 cd desafio-tech-manager
 ```
 
@@ -129,6 +129,14 @@ cd desafio-tech-manager
 cd apps/backend
 npm install
 npm run start:dev
+```
+---
+
+#### Frontend
+```
+cd apps/frontend
+npm install
+npm run dev
 ```
 ---
 
@@ -199,15 +207,7 @@ desafio-tech-manager/
 - Últimos clientes cadastrados
 - Gráfico de clientes
 
----
 
-
-#### Frontend
-```bash
-cd apps/frontend
-npm install
-npm run dev
-```
 ---
 
 ## 🧪 Testes e Cobertura
