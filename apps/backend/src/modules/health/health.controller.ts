@@ -1,8 +1,13 @@
 
 import { Controller, Get } from '@nestjs/common';
-import { register } from 'prom-client';
+import { HealthService } from './health.service';
+
 @Controller()
 export class HealthController {
-  @Get('healthz') health() { return { status: 'ok', time: new Date().toISOString() }; }
-  @Get('metrics') async metrics() { return await register.metrics(); }
+  constructor(private readonly healthService: HealthService) {}
+
+  @Get('healthz')
+  health() {
+    return this.healthService.check();
+  }
 }

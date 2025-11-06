@@ -8,7 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  backend-ci:
     runs-on: ubuntu-latest
 
     services:
@@ -27,26 +27,36 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         working-directory: apps/backend
 
-      - name: Run backend tests
-        run: npm run test
+      - name: Lint check
+        run: npm run lint
         working-directory: apps/backend
+
+      - name: Run unit tests with coverage
+        run: npm run test:coverage
+        working-directory: apps/backend
+
+      - name: Upload coverage report (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: apps/backend/coverage/
 
       - name: Build backend
         run: npm run build
         working-directory: apps/backend
 
       - name: Build Docker image
-        run: |
-          docker build -t backend:latest apps/backend
+        run: docker build -t teddy-backend:latest apps/backend
