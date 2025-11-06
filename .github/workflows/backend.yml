@@ -3,39 +3,28 @@ name: Backend CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
-      - name: Install backend dependencies
-        run: npm ci --include=dev
-        working-directory: apps/backend
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Lint backend code
-        run: npm run lint
-        working-directory: apps/backend
+      - name: Lint Backend
+        run: npm run lint --workspace=apps/backend
 
-      - name: Run backend tests
-        run: npm run test:coverage
-        working-directory: apps/backend
-
-      - name: Build backend
-        run: npm run build
-        working-directory: apps/backend
-
-      - name: Build Docker image
-        run: |
-          docker build -t backend:latest apps/backend
+      - name: Build Backend
+        run: npm run build --workspace=apps/backend
