@@ -178,6 +178,8 @@ Pipelines CI/CD independentes para frontend e backend
 Banco PostgreSQL isolado via container, pronto para replicação
 
 
-##### 
+## Teste e Qualidade
 
-Desafio concluído por: Heitor San Juliano
+O projeto inclui testes unitários configurados e executáveis tanto no backend (NestJS + Jest) quanto no frontend (React + Jest + Testing Library), com cobertura verificada via CI/CD.
+
+### Desafio concluído por: Heitor San Juliano
